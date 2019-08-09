@@ -1,15 +1,13 @@
 /* Copyright (c) The m-m-m Team, Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0 */
-package net.sf.mmm.event.base;
+package net.sf.mmm.event;
 
 import java.lang.ref.WeakReference;
 import java.util.Objects;
 
-import net.sf.mmm.event.api.EventListener;
-
 /**
  * {@link EventListener} that wraps an original {@link EventListener} using a {@link WeakReference} so that the original
- * can be gargabe collected without being {@link net.sf.mmm.event.api.EventSource#removeListener(EventListener)
+ * can be gargabe collected without being {@link net.sf.mmm.event.EventSource#removeListener(EventListener)
  * removed}.
  *
  * @param <E> the type of the {@link EventListener#onEvent(Object) handled} events.

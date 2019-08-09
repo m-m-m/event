@@ -15,7 +15,7 @@
   <description>Simple library for sending and receiving events within a JVM.</description>
 
   <properties>
-    <revision>dev</revision>
+    <revision>1.0.0</revision>
     <changelist>-SNAPSHOT</changelist>
     <java.version>11</java.version>
     <mmm.repository>event</mmm.repository>

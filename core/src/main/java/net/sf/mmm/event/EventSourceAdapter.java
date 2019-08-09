@@ -1,11 +1,8 @@
 /* Copyright (c) The m-m-m Team, Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0 */
-package net.sf.mmm.event.base;
+package net.sf.mmm.event;
 
 import java.util.Arrays;
-
-import net.sf.mmm.event.api.EventListener;
-import net.sf.mmm.event.api.EventSource;
 
 /**
  * Adapter for {@link EventSource}.
