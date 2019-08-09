@@ -1,0 +1,102 @@
+= Mature Modular Meta-framework (mmm)
+
+image:https://raw.github.com/m-m-m/mmm/master/src/site/resources/images/logo.png[logo]
+
+*Welcome to the wonderful world of http://m-m-m.sourceforge.net/index.html[mmm]*
+
+== mmm-event
+
+image:https://travis-ci.org/m-m-m/event.svg?branch=master["build-status",link="https://travis-ci.org/m-m-m/event"]
+
+The `mmm-event` is small Java module providing a generic event infrastructure. Sending and receiving events is a very common things.
+This module implements eventing as a generic pattern and provides a simple but powerful API and base implementation that saves you from a lot of work.
+It is designed minimalistic and has no external dependencies.
+
+=== Features
+
+This library offers the following features:
+
+* _Highly optimized_
++ e.g. if you want to create many objects that can have event listeners. Maybe lots of them do not have any listener registered. Hence, the shall not allocate expensive `List` instances and sending events should be a no-op.
+* _Highly customizable_
++ Any object can be an event. You are free to create your own custom event or send existing types (event `String`) as event. You create your own custom listener event and simply derive it from the `EventListener<E>` interface from this library, where you bind `<E>` to your custom event. See examples below for further details.
+* _Prevent Memory Leaks_
++ You may create objects that have an event listener registered to some event source. Now, the event source typically holds a strong reference to that listener preventing it from being garbage collected. So if you do not remove the listener when the owning object is disposed, you quickly end up with memory leaks. This library allows to add an event listener such that internally a `WeakReference` is used preventing memory leaks without additional programming effort.
+* _Single and Multi-Threaded_
++ The library provides implementations optimized for different usage scenarios. You may have a simple single-threaded use-case where you want the best performance with no overhead or you may need concurrency and thread-safeness.
+* _Event Bus_
++ For eventing between loosely coupled components you may want to use the `EventBus` that acts as a central hub where listeners are registered and events are send. This way a component only needs to subscribe for a particular type of event without knowing who the sender(s) of such events actually are.
+
+=== Usage
+
+Want to give it a try?
+
+Maven Dependency:
+```xml
+<dependency>
+  <groupId>net.sf.m-m-m</groupId>
+  <artifactId>mmm-event</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+Module Dependency:
+```java
+  requires transitive net.sf.mmm.event;
+```
+
+=== Example
+
+Create your event as interface, class, or enum:
+```java
+public class MyEvent {
+  
+  private final String message;
+  
+  public MyEvent(String message) {
+    this.message = message;
+  }
+  
+  public String getMessage() {
+    return this.message;
+  }
+}
+```
+
+Create your event listener interface:
+```java
+@FunctionalInterface
+public interface MyEventListener extends EventListener<MyEvent> {
+}
+```
+
+Create your component capable to send events:
+```java
+public interface MyComponent extends EventSource<MyEvent, MyEventListener> {
+   void doSomething();
+}
+public class MyComponentImpl extends AbstractEventSource<MyEvent, MyEventListener> implements MyComponent {
+  public void doSomething() {
+    fireEvent(new MyEvent("Hello World"));
+  }
+}
+```
+
+Putting it all together:
+```java
+public class MyDemo {
+
+  public static void main(String[] args) {
+    MyComponent component = new MyComponentImpl();
+    component.addListener((e) -> System.out.println(e.getMessage()));
+    component.doSomething();
+  }
+}
+```
+
+=== JavaDoc
+
+Here, you can find the JavaDoc of this module:
+
+* https://m-m-m.github.io/maven/apidocs/net/sf/mmm/event/api/package-summary.html#package.description[Marshall API]
+* https://m-m-m.github.io/maven/apidocs/[and much more... ]
