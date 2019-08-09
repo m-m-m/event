@@ -98,5 +98,5 @@ public class MyDemo {
 
 Here, you can find the JavaDoc of this module:
 
-* https://m-m-m.github.io/maven/apidocs/net/sf/mmm/event/api/package-summary.html#package.description[Marshall API]
+* https://m-m-m.github.io/maven/apidocs/net/sf/mmm/event/package-summary.html#package.description[Event]
 * https://m-m-m.github.io/maven/apidocs/[and much more... ]
