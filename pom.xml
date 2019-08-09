@@ -45,7 +45,7 @@
     <dependencies>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>mmm-event-core</artifactId>
+        <artifactId>mmm-event</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>
