@@ -47,6 +47,17 @@ public abstract class EventSourceAdapter<E, L extends EventListener<? super E>> 
     return listener;
   }
 
+  @SuppressWarnings("unchecked")
+  <T extends EventListener<? super E>> T unwrap(EventListener<? super E> listener) {
+
+    if (listener == null) {
+      return null;
+    } else if (listener.isWeak() && (listener instanceof WeakEventListener)) {
+      return (T) ((WeakEventListener<? super E>) listener).ref.get();
+    }
+    return (T) listener;
+  }
+
   /**
    * @param listener - see {@link EventSource#addListener(EventListener)}.
    * @param weak - see {@link EventSource#addListener(EventListener, boolean)}.
@@ -80,10 +91,29 @@ public abstract class EventSourceAdapter<E, L extends EventListener<? super E>> 
    * @return {@code true} if at least one {@link EventListener} is {@link #addListener(EventListener, boolean)
    *         registered}, {@code false} otherwise.
    */
-  boolean hasListeners() {
+  public boolean hasListeners() {
 
-    return true;
+    return (getListenerCount() > 0);
   }
+
+  /**
+   * @return the number of {@link #addListener(EventListener, boolean) registered} {@link EventListener}s.
+   */
+  public abstract int getListenerCount();
+
+  /**
+   * @param index the index of the requested {@link EventListener} in the range from {@code 0} to
+   *        <code>{@link #getListenerCount()} - 1</code>.
+   * @return the requested {@link EventListener} or {@code null} if index is out of bounds.
+   */
+  public abstract L getListener(int index);
+
+  /**
+   * @param index the index of the requested {@link EventListener} in the range from {@code 0} to
+   *        <code>{@link #getListenerCount()} - 1</code>.
+   * @return the requested {@link EventListener} or {@code null} if index is out of bounds.
+   */
+  public abstract EventListener<? super E> getRawListener(int index);
 
   /**
    * @param <E> the type of the events to send.
@@ -122,9 +152,27 @@ public abstract class EventSourceAdapter<E, L extends EventListener<? super E>> 
     }
 
     @Override
-    boolean hasListeners() {
+    public boolean hasListeners() {
 
       return false;
+    }
+
+    @Override
+    public int getListenerCount() {
+
+      return 0;
+    }
+
+    @Override
+    public EventListener getListener(int index) {
+
+      return null;
+    }
+
+    @Override
+    public EventListener getRawListener(int index) {
+
+      return null;
     }
 
   }
@@ -159,6 +207,36 @@ public abstract class EventSourceAdapter<E, L extends EventListener<? super E>> 
     public void fireEvent(E event) {
 
       fireEvent(event, this.listener);
+    }
+
+    @Override
+    public boolean hasListeners() {
+
+      return true;
+    }
+
+    @Override
+    public int getListenerCount() {
+
+      return 1;
+    }
+
+    @Override
+    public L getListener(int index) {
+
+      if (index == 0) {
+        return unwrap(this.listener);
+      }
+      return null;
+    }
+
+    @Override
+    public EventListener<? super E> getRawListener(int index) {
+
+      if (index == 0) {
+        return this.listener;
+      }
+      return null;
     }
   }
 
@@ -235,6 +313,36 @@ public abstract class EventSourceAdapter<E, L extends EventListener<? super E>> 
       } finally {
         this.locked = false;
       }
+    }
+
+    @Override
+    public boolean hasListeners() {
+
+      return true;
+    }
+
+    @Override
+    public int getListenerCount() {
+
+      return this.listenerCount;
+    }
+
+    @Override
+    public L getListener(int index) {
+
+      if ((index >= 0) && (index < this.listenerCount)) {
+        return unwrap(this.listeners[index]);
+      }
+      return null;
+    }
+
+    @Override
+    public EventListener<? super E> getRawListener(int index) {
+
+      if ((index >= 0) && (index < this.listenerCount)) {
+        return this.listeners[index];
+      }
+      return null;
     }
   }
 

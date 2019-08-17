@@ -49,6 +49,14 @@ public abstract class AbstractEventSource<E, L extends EventListener<? super E>>
   }
 
   /**
+   * @return the {@link EventSourceAdapter}.
+   */
+  protected EventSourceAdapter<E, L> getEventAdapter() {
+
+    return this.eventAdapter;
+  }
+
+  /**
    * @param event the event to {@link EventListener#onEvent(Object) send} to all {@link #addListener(EventListener)
    *        registered} {@link EventListener}s.
    */
