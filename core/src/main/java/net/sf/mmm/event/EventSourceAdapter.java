@@ -22,18 +22,13 @@ public abstract class EventSourceAdapter<E, L extends EventListener<? super E>> 
     super();
   }
 
-  boolean matches(EventListener<? super E> remove, EventListener<? super E> registered) {
+  boolean matches(EventListener<? super E> listener2remove, EventListener<? super E> registeredListener) {
 
-    if (remove == registered) {
+    registeredListener = unwrap(registeredListener);
+    if (listener2remove == registeredListener) {
       return true;
-    } else if ((registered.isMatchedUsingEquals()) && registered.equals(remove)) {
+    } else if ((registeredListener.isMatchedUsingEquals()) && registeredListener.equals(listener2remove)) {
       return true;
-    } else if (registered.isWeak() && (registered instanceof WeakEventListener)) {
-      WeakEventListener<? super E> weakListener = (WeakEventListener<? super E>) registered;
-      EventListener<? super E> reference = weakListener.ref.get();
-      if (reference != null) {
-        return matches(remove, reference);
-      }
     }
     return false;
   }
@@ -52,7 +47,7 @@ public abstract class EventSourceAdapter<E, L extends EventListener<? super E>> 
 
     if (listener == null) {
       return null;
-    } else if (listener.isWeak() && (listener instanceof WeakEventListener)) {
+    } else if (listener instanceof WeakEventListener) {
       return (T) ((WeakEventListener<? super E>) listener).ref.get();
     }
     return (T) listener;

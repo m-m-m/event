@@ -25,17 +25,6 @@ public interface EventListener<E> /* extends java.util.EventListener */ {
   }
 
   /**
-   * @return {@code true} if this {@link EventListener} may be garbage collected without being
-   *         {@link EventSource#removeListener(EventListener) removed}, {@code false} otherwise. The default is
-   *         {@code false} causing a strong reference on the original {@link EventListener} being stored in the
-   *         {@link EventSource} when {@link EventSource#addListener(EventListener) registered}.
-   */
-  default boolean isWeak() {
-
-    return false;
-  }
-
-  /**
    * This method is called if an event occurred. <br>
    * <b>WARNING:</b><br>
    * Depending on the implementation of {@link EventSource} it may NOT be legal to

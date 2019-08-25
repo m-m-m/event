@@ -31,15 +31,14 @@ public interface EventSource<E, L extends EventListener<? super E>> {
    */
   default void addListener(L listener) {
 
-    addListener(listener, listener.isWeak());
+    addListener(listener, false);
   }
 
   /**
-   * Same as {@link #addListener(EventListener, boolean)} with {@link EventListener#isWeak() weak}-flag set to
-   * {@code true}.
+   * Same as {@link #addListener(EventListener, boolean)} with {@code weak}-flag set to {@code true}.
    *
    * @param listener the {@link EventListener} to register.
-   * @see EventListener#isWeak()
+   * @see #addListener(EventListener, boolean)
    */
   default void addWeakListener(L listener) {
 
@@ -47,13 +46,18 @@ public interface EventSource<E, L extends EventListener<? super E>> {
   }
 
   /**
-   * Same as {@link #addListener(EventListener)} but with ability to override the {@link EventListener#isWeak()
-   * weak}-flag. This is for convenience allowing to register a {@link EventListener#isWeak() weak}
-   * {@link EventListener} provided as lambda expression. However, you still need to store the reference to that
-   * {@link EventListener} in the owning object.
+   * Adds an {@link EventListener} which will be notified whenever the an event occurs (something changes). If the same
+   * listener is added more than once, it will be notified more than once. The same {@link EventListener} instance may
+   * be registered for different {@code EventSource}s.
    *
    * @param listener the {@link EventListener} to register.
-   * @param weak the {@link EventListener#isWeak() weak}-flag.
+   * @param weak - {@code true} if the {@link EventListener} may be garbage collected without being
+   *        {@link EventSource#removeListener(EventListener) removed} via a {@link java.lang.ref.WeakReference},
+   *        {@code false} otherwise (if the listener will be associated using a strong reference). When providing
+   *        {@code true} here (use {@link java.lang.ref.WeakReference}), you need to store a reference to your
+   *        registered {@link EventListener} yourself in the owning parent object so it is not garbage-collected too
+   *        early.
+   * @see #addWeakListener(EventListener)
    */
   void addListener(L listener, boolean weak);
 
