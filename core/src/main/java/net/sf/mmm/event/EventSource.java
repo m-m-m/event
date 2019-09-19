@@ -10,7 +10,8 @@ package net.sf.mmm.event;
  * @param <L> the type of the {@link EventListener listeners}.
  * @since 1.0.0
  */
-public interface EventSource<E, L extends EventListener<? super E>> {
+// Java generics are kind of buggy, can not use "L extends EventListener<? super E>".
+public interface EventSource<E, L extends EventListener<?/* super E */> > {
 
   /**
    * Adds an {@link EventListener} which will be notified whenever the an event occurs (something changes). If the same

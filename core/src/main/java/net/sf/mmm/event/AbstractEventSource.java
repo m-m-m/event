@@ -9,7 +9,7 @@ package net.sf.mmm.event;
  * @param <L> the type of the {@link EventListener listeners}.
  * @since 1.0.0
  */
-public abstract class AbstractEventSource<E, L extends EventListener<? super E>> implements EventSource<E, L> {
+public abstract class AbstractEventSource<E, L extends EventListener<?/* super E */> > implements EventSource<E, L> {
 
   private EventSourceAdapter<E, L> eventAdapter;
 
@@ -22,16 +22,18 @@ public abstract class AbstractEventSource<E, L extends EventListener<? super E>>
     this.eventAdapter = EventSourceAdapter.empty();
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public void addListener(L listener, boolean weak) {
 
-    this.eventAdapter = this.eventAdapter.addListener(listener, weak);
+    this.eventAdapter = this.eventAdapter.addListener((EventListener) listener, weak);
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public boolean removeListener(L listener) {
 
-    EventSourceAdapter<E, L> adapter = this.eventAdapter.removeListener(listener);
+    EventSourceAdapter<E, L> adapter = this.eventAdapter.removeListener((EventListener) listener);
     if (adapter == null) {
       return false;
     }

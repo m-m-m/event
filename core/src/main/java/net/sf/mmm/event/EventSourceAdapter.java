@@ -13,7 +13,7 @@ import java.util.Arrays;
  * @see EventSource
  * @see AbstractEventSource
  */
-public abstract class EventSourceAdapter<E, L extends EventListener<? super E>> {
+public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
 
   private static final Empty EMPTY = new Empty();
 
@@ -116,7 +116,7 @@ public abstract class EventSourceAdapter<E, L extends EventListener<? super E>> 
    * @return the empty {@link EventSourceAdapter}.
    */
   @SuppressWarnings("unchecked")
-  public static <E, L extends EventListener<? super E>> EventSourceAdapter<E, L> empty() {
+  public static <E, L extends EventListener<?>> EventSourceAdapter<E, L> empty() {
 
     return EMPTY;
   }
