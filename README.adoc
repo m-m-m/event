@@ -2,7 +2,7 @@
 
 image:https://raw.github.com/m-m-m/mmm/master/src/site/resources/images/logo.png[logo]
 
-*Welcome to the wonderful world of http://m-m-m.sourceforge.net/index.html[mmm]*
+*Welcome to the wonderful world of http://m-m-m.github.io/[mmm]*
 
 == mmm-event
 
@@ -34,7 +34,7 @@ Want to give it a try?
 Maven Dependency:
 ```xml
 <dependency>
-  <groupId>net.sf.m-m-m</groupId>
+  <groupId>io.github.m-m-m</groupId>
   <artifactId>mmm-event</artifactId>
   <version>1.0.0</version>
 </dependency>
@@ -42,7 +42,7 @@ Maven Dependency:
 
 Module Dependency:
 ```java
-  requires transitive net.sf.mmm.event;
+  requires transitive io.github.mmm.event;
 ```
 
 === Example
