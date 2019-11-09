@@ -1,3 +1,3 @@
-module net.sf.mmm.event {
-  exports net.sf.mmm.event;
+module io.github.mmm.event {
+  exports io.github.mmm.event;
 }

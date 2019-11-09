@@ -8,7 +8,7 @@
  *
  * <pre>
  * &#64;FunctionalInterface
- * public interface MyEventListener extends {@link net.sf.mmm.event.EventListener}<MyEvent> {
+ * public interface MyEventListener extends {@link io.github.mmm.event.EventListener}<MyEvent> {
  * }
  * </pre>
  *
@@ -18,16 +18,16 @@
  * Your component sending events can be defined like this:
  *
  * <pre>
- * public interface MyComponent extends {@link net.sf.mmm.event.EventSource}<MyEvent, MyEventListener> {
+ * public interface MyComponent extends {@link io.github.mmm.event.EventSource}<MyEvent, MyEventListener> {
  *   void doSomething();
  * }
  * </pre>
  *
- * The implementation simply extends from {@link net.sf.mmm.event.AbstractEventSource} inheriting the generic event
- * infrastructure (in case you already have to extend another class, use {@link net.sf.mmm.event.EventSourceAdapter}):
+ * The implementation simply extends from {@link io.github.mmm.event.AbstractEventSource} inheriting the generic event
+ * infrastructure (in case you already have to extend another class, use {@link io.github.mmm.event.EventSourceAdapter}):
  *
  * <pre>
- * public class MyComponentImpl extends {@link net.sf.mmm.event.AbstractEventSource}<MyEvent, MyEventListener> implements MyComponent {
+ * public class MyComponentImpl extends {@link io.github.mmm.event.AbstractEventSource}<MyEvent, MyEventListener> implements MyComponent {
  *
  *   public void doSomething() {
  *     fireEvent(new MyEvent("Hello World!");
@@ -40,14 +40,14 @@
  * <pre>
  * MyComponent component = new MyComponentImpl();
  * MyEventListener listener = (e) -> System.out.println("Received event: " + e);
- * component.{@link net.sf.mmm.event.EventSource#addListener(EventListener) addListener}(listener);
+ * component.{@link io.github.mmm.event.EventSource#addListener(EventListener) addListener}(listener);
  * component.doSomething();
  * // when you are done, you can unsubscribe the listener
- * component.{@link net.sf.mmm.event.EventSource#removeListener(EventListener) removeListener}(listener);
+ * component.{@link io.github.mmm.event.EventSource#removeListener(EventListener) removeListener}(listener);
  * </pre>
  *
- * @see net.sf.mmm.event.EventListener
- * @see net.sf.mmm.event.EventSource
- * @see net.sf.mmm.event.AbstractEventSource
+ * @see io.github.mmm.event.EventListener
+ * @see io.github.mmm.event.EventSource
+ * @see io.github.mmm.event.AbstractEventSource
  */
-package net.sf.mmm.event;
+package io.github.mmm.event;
