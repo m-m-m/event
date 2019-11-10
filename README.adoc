@@ -8,7 +8,7 @@ The module `mmm-event` provides a generic event infrastructure. Sending and rece
 This module implements eventing as a generic pattern and provides a simple but powerful API and base implementation that saves you from a lot of work.
 It is designed minimalistic and has no external dependencies.
 
-=== Features
+== Features
 
 This library offers the following features:
 
@@ -23,7 +23,7 @@ This library offers the following features:
 * _Event Bus_
 + For eventing between loosely coupled components you may want to use the `EventBus` that acts as a central hub where listeners are registered and events are send. This way a component only needs to subscribe for a particular type of event without knowing who the sender(s) of such events actually are.
 
-=== Usage
+== Usage
 
 Want to give it a try?
 
@@ -89,10 +89,3 @@ public class MyDemo {
   }
 }
 ```
-
-=== JavaDoc
-
-Here, you can find the JavaDoc of this module:
-
-* https://m-m-m.github.io/maven/apidocs/net/sf/mmm/event/package-summary.html#package.description[Event]
-* https://m-m-m.github.io/maven/apidocs/[and much more... ]
