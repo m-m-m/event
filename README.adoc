@@ -37,7 +37,6 @@ Maven Dependency:
 <dependency>
   <groupId>io.github.m-m-m</groupId>
   <artifactId>mmm-event</artifactId>
-  <version>1.0.0</version>
 </dependency>
 ```
 
