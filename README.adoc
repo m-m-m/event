@@ -1,14 +1,10 @@
-= Mature Modular Meta-framework (mmm)
+image:https://raw.github.com/m-m-m/mmm/master/src/site/resources/images/logo.png[logo,link="https://m-m-m.github.io"]
 
-image:https://raw.github.com/m-m-m/mmm/master/src/site/resources/images/logo.png[logo]
-
-*Welcome to the wonderful world of http://m-m-m.github.io/[mmm]*
-
-== mmm-event
+= mmm-event
 
 image:https://travis-ci.org/m-m-m/event.svg?branch=master["build-status",link="https://travis-ci.org/m-m-m/event"]
 
-The `mmm-event` is small Java module providing a generic event infrastructure. Sending and receiving events is a very common things.
+The module `mmm-event` provides a generic event infrastructure. Sending and receiving events is a very common things.
 This module implements eventing as a generic pattern and provides a simple but powerful API and base implementation that saves you from a lot of work.
 It is designed minimalistic and has no external dependencies.
 
