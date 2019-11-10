@@ -13,15 +13,20 @@ It is designed minimalistic and has no external dependencies.
 This library offers the following features:
 
 * _Highly optimized_
-+ e.g. if you want to create many objects that can have event listeners. Maybe lots of them do not have any listener registered. Hence, the shall not allocate expensive `List` instances and sending events should be a no-op.
++
+e.g. if you want to create many objects that can have event listeners. Maybe lots of them do not have any listener registered. Hence, the shall not allocate expensive `List` instances and sending events should be a no-op.
 * _Highly customizable_
-+ Any object can be an event. You are free to create your own custom event or send existing types (event `String`) as event. You create your own custom listener event and simply derive it from the `EventListener<E>` interface from this library, where you bind `<E>` to your custom event. See examples below for further details.
++
+Any object can be an event. You are free to create your own custom event or send existing types (event `String`) as event. You create your own custom listener event and simply derive it from the `EventListener<E>` interface from this library, where you bind `<E>` to your custom event. See examples below for further details.
 * _Prevent Memory Leaks_
-+ You may create objects that have an event listener registered to some event source. Now, the event source typically holds a strong reference to that listener preventing it from being garbage collected. So if you do not remove the listener when the owning object is disposed, you quickly end up with memory leaks. This library allows to add an event listener such that internally a `WeakReference` is used preventing memory leaks without additional programming effort.
++
+You may create objects that have an event listener registered to some event source. Now, the event source typically holds a strong reference to that listener preventing it from being garbage collected. So if you do not remove the listener when the owning object is disposed, you quickly end up with memory leaks. This library allows to add an event listener such that internally a `WeakReference` is used preventing memory leaks without additional programming effort.
 * _Single and Multi-Threaded_
-+ The library provides implementations optimized for different usage scenarios. You may have a simple single-threaded use-case where you want the best performance with no overhead or you may need concurrency and thread-safeness.
++
+The library provides implementations optimized for different usage scenarios. You may have a simple single-threaded use-case where you want the best performance with no overhead or you may need concurrency and thread-safeness.
 * _Event Bus_
-+ For eventing between loosely coupled components you may want to use the `EventBus` that acts as a central hub where listeners are registered and events are send. This way a component only needs to subscribe for a particular type of event without knowing who the sender(s) of such events actually are.
++
+For eventing between loosely coupled components you may want to use the `EventBus` that acts as a central hub where listeners are registered and events are send. This way a component only needs to subscribe for a particular type of event without knowing who the sender(s) of such events actually are.
 
 == Usage
 
