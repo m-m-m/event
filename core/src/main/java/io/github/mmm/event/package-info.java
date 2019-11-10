@@ -8,7 +8,7 @@
  *
  * <pre>
  * &#64;FunctionalInterface
- * public interface MyEventListener extends {@link io.github.mmm.event.EventListener}<MyEvent> {
+ * public interface MyEventListener extends {@link io.github.mmm.event.EventListener}{@literal <}MyEvent{@literal >} {
  * }
  * </pre>
  *
@@ -18,7 +18,7 @@
  * Your component sending events can be defined like this:
  *
  * <pre>
- * public interface MyComponent extends {@link io.github.mmm.event.EventSource}<MyEvent, MyEventListener> {
+ * public interface MyComponent extends {@link io.github.mmm.event.EventSource}{@literal <}MyEvent, MyEventListener{@literal >} {
  *   void doSomething();
  * }
  * </pre>
@@ -27,7 +27,7 @@
  * infrastructure (in case you already have to extend another class, use {@link io.github.mmm.event.EventSourceAdapter}):
  *
  * <pre>
- * public class MyComponentImpl extends {@link io.github.mmm.event.AbstractEventSource}<MyEvent, MyEventListener> implements MyComponent {
+ * public class MyComponentImpl extends {@link io.github.mmm.event.AbstractEventSource}{@literal <}MyEvent, MyEventListener{@literal >} implements MyComponent {
  *
  *   public void doSomething() {
  *     fireEvent(new MyEvent("Hello World!");
@@ -39,7 +39,7 @@
  *
  * <pre>
  * MyComponent component = new MyComponentImpl();
- * MyEventListener listener = (e) -> System.out.println("Received event: " + e);
+ * MyEventListener listener = (e) -{@literal >} System.out.println("Received event: " + e);
  * component.{@link io.github.mmm.event.EventSource#addListener(EventListener) addListener}(listener);
  * component.doSomething();
  * // when you are done, you can unsubscribe the listener
