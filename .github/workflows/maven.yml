@@ -2,6 +2,10 @@ name: build
 
 on: [push]
 
+env:
+  GITHUB_USERNAME: x-access-token
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   build:
 
@@ -14,4 +18,4 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B deploy -Dregistry=https://maven.pkg.github.com/m-m-m -Dtoken=GH_TOKEN
+      run: mvn -B deploy -Dregistry=https://maven.pkg.github.com/m-m-m -Dtoken=${GITHUB_TOKEN}
