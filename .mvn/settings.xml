@@ -26,7 +26,7 @@
       </activation>
       <properties>
         <mmm.deploy.release.repository>https://maven.pkg.github.com/m-m-m</mmm.deploy.release.repository>
-        <mmm.deploy.snapshot.repository>https://maven.pkg.github.com/m-m-m</mmm.deploy.snapshot.repository>
+        <mmm.deploy.snapshot.repository>https://maven.pkg.github.com/m-m-m/event</mmm.deploy.snapshot.repository>
       </properties>
       <repositories>
        <repository>
