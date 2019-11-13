@@ -18,4 +18,4 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B deploy -Dregistry=https://maven.pkg.github.com/m-m-m -Dtoken=${GITHUB_TOKEN}
+      run: mvn -B --settings .mvn/settings.xml deploy -Dregistry=https://maven.pkg.github.com/m-m-m -Dtoken=${GITHUB_TOKEN}
