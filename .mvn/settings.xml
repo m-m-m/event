@@ -25,7 +25,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <mmm.deploy.release.repository>https://maven.pkg.github.com/m-m-m</mmm.deploy.release.repository>
+        <mmm.deploy.release.repository>https://maven.pkg.github.com/m-m-m/event</mmm.deploy.release.repository>
         <mmm.deploy.snapshot.repository>https://maven.pkg.github.com/m-m-m/event</mmm.deploy.snapshot.repository>
       </properties>
       <repositories>
