@@ -6,7 +6,7 @@ env:
   - secure: WSDoAG1agdVsjtzzX00E/lsJJAjDMjrKCImnrvZv/ZcKmQBeqOBXFAKsR8t2G/Ng8d2Kj3VWp31tkCsVsVCtzpZ3XTuCCHf7Inz2QktK1BSEDgE4he9hCMb8Fw0PpEjt+AYkAGI6ku+8tEJFanqzG3CU7zvvxXBD6YhXELmilbSb/obyinuFhPriRC1Vyy5wR30iQYx8wypdMy/BK8TQcReBa4Hjn+GGSGOOb4NOgla91UcWhaXcyJm2Q509xv5C/fuIH3BAgpgO4WvmeFtOMrpE9dua/bsLAZvrnntSlvNy8rVvwwpKOTIFm/xNxMvMbEb2OiMbKbn28A/Uz6BN/wT8wJtiqqhADWS5Kx0vT6F8NrwkNwdBOtX/g5CbA/65Q+2IQBgJ34F+DczyyFtXUWrDVjjZpzGz642L2kbxrIOh14EiBZvcl1ycK7mId1Xy45V5yqS2BDjBLVv8eXfQpm+jLBILB5ICpgfDtQaBilIpoOqsAr/fhD2uNCmUs2paoPz1BVdVoAdFQ9i8ZN/b0KbtzM7FftZ0wEplvPh8VFnBUkmAMLUONjBgenp8np/HEGhB4yqBtUZBsaGuvpRhT3WSjmrD6rD1gIKHBZnagTZZ84afWNPWS5TPfvNIC2Mhg56wwmR7Sgi09FcP5VmQR6hIjqt4XzmBEAvOHvCbXPE=
 install: skip
 script: mvn --settings .mvn/settings.xml install
-after_script: '[[ $TRAVIS_BRANCH == "master" ]] && mvn --settings .mvn/settings.xml deploy'
+after_script: '[[ $TRAVIS_BRANCH == "master" ]] && mvn --settings .mvn/settings.xml -DskipTests=true deploy'
 cache:
   directories: "$HOME/.m2"
 branches:
