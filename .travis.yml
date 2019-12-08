@@ -5,7 +5,7 @@ env:
   - secure: Hwy7MiDdaR3achWJPbwrk1p5b6WDETeFbiZMQ5vDFrQwfwmnTyDTNOlHAzPyBN6aa3/AzyntLIsMnbDYPjUNJbkL6YPoqYOsHw0umeN4WlYdFX+VlQMl5OgLGqpHwwgioWoathhYzln3aNc3966VqPmDp6/R8BNu4FuDbur57LKmQp0NeHCzgb0fiPRek41H+W7teaze31nOMYGLwHsjb/5pKMojnxnwgsgoXk8J80Ogc6Tvqhe4+P33IZGt9BV4aY0uCFKLWuRgp7Rp6IX2y5fs7jdRbxuTJC1KHzCylCEHX2sllUq/2CMaPExzbPdLTnxiuOzN8juhOk64wD+36Xp/lWlJiIpD7B5lp/drLkhAU7RG14guDGBrPI646FJSt+0nPN5k/bQEutndzGRP7mo3+DzCQ0wGI8VFnu8GEcOOcFqd2Xc/b+nOqoVZvv/YKuAEJev6DtiCHZV7Ay8WQCKAxvSCrHZfeyPZNHxjUexHoYD3gJ8x9OcVfidc84DKgSsGRjBJgZLcUBDxR79NM6IqLOOwfCv+49QRarTanOMo1BXd+T0yFOf66hxBesAJuUlS6doMVEMBs/HWwUIt8SPKmYUS404CUc5qKLy2Y8TEVJr7TfbvEFFwqgmzvsOcqfkJpuXFzU6Zksar5VyWZTGLjYCrbiKW32owKAEYCfo=
   - secure: WSDoAG1agdVsjtzzX00E/lsJJAjDMjrKCImnrvZv/ZcKmQBeqOBXFAKsR8t2G/Ng8d2Kj3VWp31tkCsVsVCtzpZ3XTuCCHf7Inz2QktK1BSEDgE4he9hCMb8Fw0PpEjt+AYkAGI6ku+8tEJFanqzG3CU7zvvxXBD6YhXELmilbSb/obyinuFhPriRC1Vyy5wR30iQYx8wypdMy/BK8TQcReBa4Hjn+GGSGOOb4NOgla91UcWhaXcyJm2Q509xv5C/fuIH3BAgpgO4WvmeFtOMrpE9dua/bsLAZvrnntSlvNy8rVvwwpKOTIFm/xNxMvMbEb2OiMbKbn28A/Uz6BN/wT8wJtiqqhADWS5Kx0vT6F8NrwkNwdBOtX/g5CbA/65Q+2IQBgJ34F+DczyyFtXUWrDVjjZpzGz642L2kbxrIOh14EiBZvcl1ycK7mId1Xy45V5yqS2BDjBLVv8eXfQpm+jLBILB5ICpgfDtQaBilIpoOqsAr/fhD2uNCmUs2paoPz1BVdVoAdFQ9i8ZN/b0KbtzM7FftZ0wEplvPh8VFnBUkmAMLUONjBgenp8np/HEGhB4yqBtUZBsaGuvpRhT3WSjmrD6rD1gIKHBZnagTZZ84afWNPWS5TPfvNIC2Mhg56wwmR7Sgi09FcP5VmQR6hIjqt4XzmBEAvOHvCbXPE=
 install: skip
-script: mvn --settings .mvn/settings.xml install && [[ $TRAVIS_BRANCH != "master" ]] || mvn --settings .mvn/settings.xml -DskipTests=true deploy
+script: mvn --settings .mvn/settings.xml install && ([[ $TRAVIS_BRANCH != "master" ]] || mvn --settings .mvn/settings.xml -DskipTests=true deploy)
 cache:
   directories: "$HOME/.m2"
 branches:
