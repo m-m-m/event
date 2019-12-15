@@ -1,4 +1,4 @@
-image:https://m-m-m.github.io/logo.png[logo,link="https://m-m-m.github.io"]
+image:https://m-m-m.github.io/logo.svg[logo,width="150",link="https://m-m-m.github.io"]
 
 = mmm-event
 
