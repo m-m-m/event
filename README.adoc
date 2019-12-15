@@ -5,7 +5,7 @@ image:https://m-m-m.github.io/logo.svg[logo,width="150",link="https://m-m-m.gith
 image:https://img.shields.io/github/license/m-m-m/event.svg?label=License["Apache License, Version 2.0",link=https://github.com/m-m-m/event/blob/master/LICENSE]
 image:https://img.shields.io/maven-central/v/io.github.m-m-m/mmm-event.svg?label=Maven%20Central["Maven Central",link=https://search.maven.org/search?q=g:io.github.m-m-m]
 image:https://travis-ci.org/m-m-m/event.svg?branch=master["build-status",link="https://travis-ci.org/m-m-m/event"]
-image:https://github.com/m-m-m/event/workflows/build/badge.svg["build-status",link="https://github.com/m-m-m/event/actions"]
+image:https://m-m-m.github.io/javadoc.svg?status=online["apidoc",link="https://m-m-m.github.io/docs/api/io.github.mmm.event/module-summary.html"]
 
 The module `mmm-event` provides a generic event infrastructure. Sending and receiving events is a very common things.
 This module implements eventing as a generic pattern and provides a simple but powerful API and base implementation that saves you from a lot of work.
