@@ -4,6 +4,8 @@ package io.github.mmm.event;
 
 import java.util.Arrays;
 
+import io.github.mmm.event.impl.WeakEventListener;
+
 /**
  * Adapter for {@link EventSource}.
  *

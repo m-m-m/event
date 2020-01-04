@@ -1,9 +1,12 @@
 /* Copyright (c) The m-m-m Team, Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0 */
-package io.github.mmm.event;
+package io.github.mmm.event.impl;
 
 import java.lang.ref.WeakReference;
 import java.util.Objects;
+
+import io.github.mmm.event.EventListener;
+import io.github.mmm.event.EventSourceAdapter;
 
 /**
  * {@link EventListener} that wraps an original {@link EventListener} using a {@link WeakReference} so that the original
@@ -12,11 +15,12 @@ import java.util.Objects;
  * @param <E> the type of the {@link EventListener#onEvent(Object) handled} events.
  * @since 1.0.0
  */
-class WeakEventListener<E> implements EventListener<E> {
+public class WeakEventListener<E> implements EventListener<E> {
 
   private final EventSourceAdapter<E, ?> source;
 
-  final WeakReference<EventListener<E>> ref;
+  /** The {@link WeakReference}. */
+  public final WeakReference<EventListener<E>> ref;
 
   /**
    * The constructor.
@@ -58,7 +62,7 @@ class WeakEventListener<E> implements EventListener<E> {
    * @param listeners the array of event listeners. May be modified by this method.
    * @return the new size of listeners.
    */
-  static int trim(int count, EventListener<?>[] listeners) {
+  public static int trim(int count, EventListener<?>[] listeners) {
 
     for (int i = 0; i < count; i++) {
       if (listeners[i] instanceof WeakEventListener) {
