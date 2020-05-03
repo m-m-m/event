@@ -80,8 +80,7 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     try {
       listener.onEvent(event);
     } catch (Exception e) {
-      // temporary workaround for TeaVm
-      // Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
+      Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
     }
   }
 
