@@ -15,8 +15,6 @@
   <description>Simple library for sending and receiving events within a JVM.</description>
 
   <properties>
-    <revision>0.1.0</revision>
-    <changelist>-SNAPSHOT</changelist>
     <mmm.repository>event</mmm.repository>
   </properties>
 
