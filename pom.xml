@@ -9,13 +9,14 @@
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>mmm-event-parent</artifactId>
-  <version>${revision}${changelist}</version>
+  <version>${revision}</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Simple library for sending and receiving events within a JVM.</description>
 
   <properties>
     <mmm.repository>event</mmm.repository>
+    <revision>0-SNAPSHOT</revision>
   </properties>
 
   <modules>
