@@ -42,8 +42,8 @@ public abstract class AbstractEventSender<E, L extends EventListener<?/* super E
   }
 
   /**
-   * @return {@code true} if at least one {@link EventListener} is {@link #addListener(EventListener, boolean)
-   *         registered}, {@code false} otherwise.
+   * @return {@code true} if at least one {@link EventListener} is {@link #addListener(EventListener) registered},
+   *         {@code false} otherwise.
    */
   protected boolean hasListeners() {
 

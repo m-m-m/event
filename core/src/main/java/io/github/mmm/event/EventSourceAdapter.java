@@ -167,7 +167,7 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     @Override
     public EventSourceAdapter<E, L> removeListener(EventListener<? super E> eventListener) {
 
-      if (AbstractEventSource.matches(eventListener, this.listener)) {
+      if (eventListener.matches(this.listener)) {
         return EMPTY;
       }
       return null;
@@ -196,7 +196,7 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     public L getListener(int index) {
 
       if (index == 0) {
-        return (L) AbstractEventSource.unwrap(this.listener);
+        return (L) this.listener.unwrap();
       }
       return null;
     }
@@ -249,7 +249,7 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     public EventSourceAdapter<E, L> removeListener(EventListener<? super E> listener) {
 
       for (int i = 0; i < this.listenerCount; i++) {
-        if (AbstractEventSource.matches(listener, this.listeners[i])) {
+        if (listener.matches(this.listeners[i])) {
           if (this.listenerCount == 2) {
             return new Single<>(this.listeners[1 - i]);
           } else {
@@ -307,7 +307,7 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     public L getListener(int index) {
 
       if ((index >= 0) && (index < this.listenerCount)) {
-        return (L) AbstractEventSource.unwrap(this.listeners[index]);
+        return (L) this.listeners[index].unwrap();
       }
       return null;
     }

@@ -58,6 +58,19 @@ public class WeakEventListener<E> implements EventListener<E> {
     }
   }
 
+  @Override
+  public EventListener<E> weak(EventSource<E, ?> eventSource) {
+
+    assert (eventSource == this.source);
+    return this;
+  }
+
+  @Override
+  public EventListener<E> unwrap() {
+
+    return this.ref.get();
+  }
+
   /**
    * @param count the current size of listeners. Has to be less or equal to the length of the given {@code listeners}
    *        array.
