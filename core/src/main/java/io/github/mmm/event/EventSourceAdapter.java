@@ -24,43 +24,11 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     super();
   }
 
-  boolean matches(EventListener<? super E> listener2remove, EventListener<? super E> registeredListener) {
-
-    registeredListener = unwrap(registeredListener);
-    if (listener2remove == registeredListener) {
-      return true;
-    } else if ((registeredListener.isMatchedUsingEquals()) && registeredListener.equals(listener2remove)) {
-      return true;
-    }
-    return false;
-  }
-
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  EventListener<? super E> wrap(EventListener<? super E> listener, boolean weak) {
-
-    if (weak) {
-      return new WeakEventListener(this, listener);
-    }
-    return listener;
-  }
-
-  @SuppressWarnings("unchecked")
-  <T extends EventListener<? super E>> T unwrap(EventListener<? super E> listener) {
-
-    if (listener == null) {
-      return null;
-    } else if (listener instanceof WeakEventListener) {
-      return (T) ((WeakEventListener<? super E>) listener).ref.get();
-    }
-    return (T) listener;
-  }
-
   /**
    * @param listener - see {@link EventSource#addListener(EventListener)}.
-   * @param weak - see {@link EventSource#addListener(EventListener, boolean)}.
    * @return this adapter itself or a new instance capable to handle more listeners.
    */
-  public abstract EventSourceAdapter<E, L> addListener(EventListener<? super E> listener, boolean weak);
+  public abstract EventSourceAdapter<E, L> addListener(EventListener<? super E> listener);
 
   /**
    * @param listener - see {@link EventSource#removeListener(EventListener)}.
@@ -70,23 +38,27 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
   public abstract EventSourceAdapter<E, L> removeListener(EventListener<? super E> listener);
 
   /**
-   * @param event the event to {@link EventListener#onEvent(Object) send} to all
-   *        {@link #addListener(EventListener, boolean) registered} {@link EventListener}s.
+   * @param event the event to {@link EventListener#onEvent(Object) send} to all {@link #addListener(EventListener)
+   *        registered} {@link EventListener}s.
+   * @return {@code true} if the event has actually been dispatched, {@code false} otherwise (no listener was
+   *         {@link #addListener(EventListener) registered} for the event).
    */
-  public abstract void fireEvent(E event);
+  public abstract boolean fireEvent(E event);
 
-  void fireEvent(E event, EventListener<? super E> listener) {
+  boolean fireEvent(E event, EventListener<? super E> listener) {
 
     try {
       listener.onEvent(event);
+      return true;
     } catch (Exception e) {
       Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
     }
+    return false;
   }
 
   /**
-   * @return {@code true} if at least one {@link EventListener} is {@link #addListener(EventListener, boolean)
-   *         registered}, {@code false} otherwise.
+   * @return {@code true} if at least one {@link EventListener} is {@link #addListener(EventListener) registered},
+   *         {@code false} otherwise.
    */
   public boolean hasListeners() {
 
@@ -94,7 +66,7 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
   }
 
   /**
-   * @return the number of {@link #addListener(EventListener, boolean) registered} {@link EventListener}s.
+   * @return the number of {@link #addListener(EventListener) registered} {@link EventListener}s.
    */
   public abstract int getListenerCount();
 
@@ -132,9 +104,9 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     }
 
     @Override
-    public EventSourceAdapter addListener(EventListener listener, boolean weak) {
+    public EventSourceAdapter addListener(EventListener listener) {
 
-      return new Single<>(wrap(listener, weak));
+      return new Single<>(listener);
     }
 
     @Override
@@ -144,8 +116,9 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     }
 
     @Override
-    public void fireEvent(Object event) {
+    public boolean fireEvent(Object event) {
 
+      return false;
     }
 
     @Override
@@ -185,25 +158,25 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     }
 
     @Override
-    public EventSourceAdapter<E, L> addListener(EventListener<? super E> eventListener, boolean weak) {
+    public EventSourceAdapter<E, L> addListener(EventListener<? super E> eventListener) {
 
-      return new Multi<>(this.listener, wrap(eventListener, weak));
+      return new Multi<>(this.listener, eventListener);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public EventSourceAdapter<E, L> removeListener(EventListener<? super E> eventListener) {
 
-      if (matches(eventListener, this.listener)) {
+      if (AbstractEventSource.matches(eventListener, this.listener)) {
         return EMPTY;
       }
       return null;
     }
 
     @Override
-    public void fireEvent(E event) {
+    public boolean fireEvent(E event) {
 
-      fireEvent(event, this.listener);
+      return fireEvent(event, this.listener);
     }
 
     @Override
@@ -218,11 +191,12 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
       return 1;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public L getListener(int index) {
 
       if (index == 0) {
-        return unwrap(this.listener);
+        return (L) AbstractEventSource.unwrap(this.listener);
       }
       return null;
     }
@@ -254,7 +228,7 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     }
 
     @Override
-    public EventSourceAdapter<E, L> addListener(EventListener<? super E> listener, boolean weak) {
+    public EventSourceAdapter<E, L> addListener(EventListener<? super E> listener) {
 
       int oldCapacity = this.listeners.length;
       if (this.locked) {
@@ -275,7 +249,7 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     public EventSourceAdapter<E, L> removeListener(EventListener<? super E> listener) {
 
       for (int i = 0; i < this.listenerCount; i++) {
-        if (matches(listener, this.listeners[i])) {
+        if (AbstractEventSource.matches(listener, this.listeners[i])) {
           if (this.listenerCount == 2) {
             return new Single<>(this.listeners[1 - i]);
           } else {
@@ -300,16 +274,21 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     }
 
     @Override
-    public void fireEvent(E event) {
+    public boolean fireEvent(E event) {
 
+      boolean dispatched = false;
       try {
         this.locked = true;
         for (int i = 0; i < this.listenerCount; i++) {
-          fireEvent(event, this.listeners[i]);
+          boolean send = fireEvent(event, this.listeners[i]);
+          if (send) {
+            dispatched = true;
+          }
         }
       } finally {
         this.locked = false;
       }
+      return dispatched;
     }
 
     @Override
@@ -328,7 +307,7 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     public L getListener(int index) {
 
       if ((index >= 0) && (index < this.listenerCount)) {
-        return unwrap(this.listeners[index]);
+        return (L) AbstractEventSource.unwrap(this.listeners[index]);
       }
       return null;
     }

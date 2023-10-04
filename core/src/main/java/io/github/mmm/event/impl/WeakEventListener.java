@@ -6,6 +6,7 @@ import java.lang.ref.WeakReference;
 import java.util.Objects;
 
 import io.github.mmm.event.EventListener;
+import io.github.mmm.event.EventSource;
 import io.github.mmm.event.EventSourceAdapter;
 
 /**
@@ -17,7 +18,8 @@ import io.github.mmm.event.EventSourceAdapter;
  */
 public class WeakEventListener<E> implements EventListener<E> {
 
-  private final EventSourceAdapter<E, ?> source;
+  @SuppressWarnings("rawtypes")
+  private final EventSource source;
 
   /** The {@link WeakReference}. */
   public final WeakReference<EventListener<E>> ref;
@@ -28,7 +30,7 @@ public class WeakEventListener<E> implements EventListener<E> {
    * @param source the {@link EventSourceAdapter}.
    * @param listener the original listener to wrap.
    */
-  public WeakEventListener(EventSourceAdapter<E, ?> source, EventListener<E> listener) {
+  public WeakEventListener(EventSource<E, ?> source, EventListener<E> listener) {
 
     super();
     Objects.requireNonNull(source, "source");
