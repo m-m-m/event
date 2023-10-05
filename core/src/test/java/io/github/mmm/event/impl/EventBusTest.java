@@ -185,7 +185,11 @@ public abstract class EventBusTest extends Assertions {
         // send event to next thread
         this.eventBus.sendEvent(new MyEvent(this.threadId));
       }
-      yield();
+      // OMG: calling just "yield()" leads to compilation error:
+      // invalid use of a restricted identifier 'yield'
+      // This is really ridiculous
+      // https://github.com/jakartaee/expression-language/issues/122
+      Thread.yield();
       // this.eventBus.removeListener(this);
     }
   }
