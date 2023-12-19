@@ -2,7 +2,7 @@ package io.github.mmm.event;
 
 import java.util.ServiceLoader;
 
-import io.github.mmm.base.config.ServiceHelper;
+import io.github.mmm.base.service.ServiceHelper;
 
 /**
  * Class giving {@link #get() global access} to the {@link EventBus}.
