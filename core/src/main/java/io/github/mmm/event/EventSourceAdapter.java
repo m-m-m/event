@@ -4,6 +4,7 @@ package io.github.mmm.event;
 
 import java.util.Arrays;
 
+import io.github.mmm.base.exception.ReadOnlyException;
 import io.github.mmm.event.impl.WeakEventListener;
 
 /**
@@ -18,6 +19,8 @@ import io.github.mmm.event.impl.WeakEventListener;
 public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
 
   private static final Empty EMPTY = new Empty();
+
+  private static final ReadOnly READ_ONLY = new ReadOnly();
 
   EventSourceAdapter() {
 
@@ -87,12 +90,27 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
   /**
    * @param <E> the type of the events to send.
    * @param <L> the type of the {@link EventListener listeners}.
-   * @return the empty {@link EventSourceAdapter}.
+   * @return the empty {@link EventSourceAdapter}. Is used as a singleton instance for best efficiency allocating
+   *         absolutely no resources until a listener gets {@link #addListener(EventListener) added}.
    */
   @SuppressWarnings("unchecked")
   public static <E, L extends EventListener<?>> EventSourceAdapter<E, L> empty() {
 
     return EMPTY;
+  }
+
+  /**
+   * Like {@link #empty()} but for read-only objects.
+   *
+   * @param <E> the type of the events to send.
+   * @param <L> the type of the {@link EventListener listeners}.
+   * @return the read-only {@link EventSourceAdapter}. It will always be empty and never allow any mutation so
+   *         {@link #addListener(EventListener)} will always throw {@link ReadOnlyException}.
+   */
+  @SuppressWarnings("unchecked")
+  public static <E, L extends EventListener<?>> EventSourceAdapter<E, L> readOnly() {
+
+    return READ_ONLY;
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -320,6 +338,58 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
       }
       return null;
     }
+  }
+
+  @SuppressWarnings("rawtypes")
+  private static class ReadOnly extends EventSourceAdapter {
+
+    private ReadOnly() {
+
+      super();
+    }
+
+    @Override
+    public EventSourceAdapter addListener(EventListener listener) {
+
+      throw new ReadOnlyException(EventSourceAdapter.class);
+    }
+
+    @Override
+    public EventSourceAdapter removeListener(EventListener listener) {
+
+      return null;
+    }
+
+    @Override
+    public boolean fireEvent(Object event) {
+
+      return false;
+    }
+
+    @Override
+    public boolean hasListeners() {
+
+      return false;
+    }
+
+    @Override
+    public int getListenerCount() {
+
+      return 0;
+    }
+
+    @Override
+    public EventListener getListener(int index) {
+
+      return null;
+    }
+
+    @Override
+    public EventListener getRawListener(int index) {
+
+      return null;
+    }
+
   }
 
 }

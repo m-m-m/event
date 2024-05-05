@@ -70,4 +70,17 @@ public abstract class AbstractEventSender<E, L extends EventListener<?/* super E
     return this.eventAdapter.fireEvent(event);
   }
 
+  /**
+   * Makes this event sender read-only so it discards all {@link #addListener(EventListener) added}
+   * {@link EventListener}s and prevents future {@link #addListener(EventListener) adding}.<br>
+   * <b>ATTENTION</b>: This is an internal method that shall only be used by code of this library and not by third-party
+   * users.
+   *
+   * @see EventSourceAdapter#readOnly()
+   */
+  protected void makeReadOnly() {
+
+    this.eventAdapter = EventSourceAdapter.readOnly();
+  }
+
 }
