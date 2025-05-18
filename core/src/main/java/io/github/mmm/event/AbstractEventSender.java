@@ -58,12 +58,6 @@ public abstract class AbstractEventSender<E, L extends EventListener<?/* super E
     return this.eventAdapter;
   }
 
-  /**
-   * @param event the event to {@link EventListener#onEvent(Object) send} to all {@link #addListener(EventListener)
-   *        registered} {@link EventListener}s.
-   * @return {@code true} if the event has actually been dispatched, {@code false} otherwise (no listener was
-   *         {@link #addListener(EventListener) registered} for the event).
-   */
   @Override
   protected boolean fireEvent(E event) {
 
