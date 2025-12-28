@@ -34,7 +34,7 @@ public abstract class EventBusTest extends Assertions {
    * Tests the {@link #getEventBus() event bus} with a simple scenario.
    */
   @Test
-  public void testSimple() {
+  void testSimple() {
 
     final EventBus eventBus = getEventBus();
     final List<Object> events = new LinkedList<>();
@@ -82,7 +82,7 @@ public abstract class EventBusTest extends Assertions {
    */
   @Test
   @Disabled("Only for local testing.")
-  public void testConcurrent() throws Exception {
+  void testConcurrent() throws Exception {
 
     // arrange
     final EventBus eventBus = getEventBus();

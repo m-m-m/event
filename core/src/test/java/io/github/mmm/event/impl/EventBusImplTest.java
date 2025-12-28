@@ -14,7 +14,7 @@ import io.github.mmm.event.EventListener;
 /**
  * Test of {@link EventBusImpl}.
  */
-public class EventBusImplTest extends EventBusTest {
+class EventBusImplTest extends EventBusTest {
 
   /**
    * @return the {@link EventBus} instance to test.
@@ -29,7 +29,7 @@ public class EventBusImplTest extends EventBusTest {
    * Tests the error handling of {@link EventBusImpl}.
    */
   @Test
-  public void testErrorHandling() {
+  void testErrorHandling() {
 
     // arrange
 
