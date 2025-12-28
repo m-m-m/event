@@ -31,7 +31,7 @@ public class EventBusImplTest extends EventBusTest {
   @Test
   public void testErrorHandling() {
 
-    // given
+    // arrange
 
     final List<Throwable> errorList = new LinkedList<>();
     final String errorEvent = "error";
@@ -60,7 +60,7 @@ public class EventBusImplTest extends EventBusTest {
     };
     eventBus.addListener(String.class, listener);
 
-    // when + then
+    // act + assert
     eventBus.sendEvent("foo");
     assertThat(errorList).isEmpty();
     eventBus.sendEvent(errorEvent);

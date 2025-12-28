@@ -84,7 +84,7 @@ public abstract class EventBusTest extends Assertions {
   @Disabled("Only for local testing.")
   public void testConcurrent() throws Exception {
 
-    // given
+    // arrange
     final EventBus eventBus = getEventBus();
 
     EventThread[] threads = new EventThread[NUMBER_OF_THREADS];
@@ -92,7 +92,7 @@ public abstract class EventBusTest extends Assertions {
       threads[i] = new EventThread(eventBus, i);
     }
 
-    // when
+    // act
     for (int i = 0; i < threads.length; i++) {
       threads[i].start();
     }
@@ -101,7 +101,7 @@ public abstract class EventBusTest extends Assertions {
       threads[i].join();
     }
 
-    // then
+    // assert
 
     //
     // + one for the thread itself (see EventThread.run()).
