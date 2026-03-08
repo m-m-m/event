@@ -129,7 +129,7 @@ public abstract class AbstractEventBus implements EventBus {
       } else {
         parent = null;
       }
-      dispatcher = this.eventType2dispatcherMap.computeIfAbsent(eventType, t -> new EventDispatcher<>(parent));
+      dispatcher = this.eventType2dispatcherMap.computeIfAbsent(eventType, _ -> new EventDispatcher<>(parent));
     }
     return (EventDispatcher<E>) dispatcher;
   }
