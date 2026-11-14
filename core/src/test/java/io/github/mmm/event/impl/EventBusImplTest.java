@@ -11,23 +11,17 @@ import io.github.mmm.base.exception.GlobalExceptionHandler;
 import io.github.mmm.event.EventBus;
 import io.github.mmm.event.EventListener;
 
-/**
- * Test of {@link EventBusImpl}.
- */
+/// Test of [EventBusImpl].
 class EventBusImplTest extends EventBusTest {
 
-  /**
-   * @return the {@link EventBus} instance to test.
-   */
+  /// @return the [EventBus] instance to test.
   @Override
   protected EventBus getEventBus() {
 
     return new EventBusImpl();
   }
 
-  /**
-   * Tests the error handling of {@link EventBusImpl}.
-   */
+  /// Tests the error handling of [EventBusImpl].
   @Test
   void testErrorHandling() {
 

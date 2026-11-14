@@ -7,15 +7,13 @@ import java.util.Arrays;
 import io.github.mmm.base.exception.ReadOnlyException;
 import io.github.mmm.event.impl.WeakEventListener;
 
-/**
- * Adapter for {@link EventSource}.
- *
- * @param <E> the type of the events to send.
- * @param <L> the type of the {@link EventListener listeners}.
- * @since 1.0.0
- * @see EventSource
- * @see AbstractEventSource
- */
+/// Adapter for [EventSource].
+///
+/// @param <E> the type of the events to send.
+/// @param <L> the type of the [listeners][EventListener].
+/// @since 1.0.0
+/// @see EventSource
+/// @see AbstractEventSource
 public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
 
   private static final Empty EMPTY = new Empty();
@@ -27,25 +25,18 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     super();
   }
 
-  /**
-   * @param listener - see {@link EventSource#addListener(EventListener)}.
-   * @return this adapter itself or a new instance capable to handle more listeners.
-   */
+  /// @param listener - see [EventSource#addListener(EventListener)].
+  /// @return this adapter itself or a new instance capable to handle more listeners.
   public abstract EventSourceAdapter<E, L> addListener(EventListener<? super E> listener);
 
-  /**
-   * @param listener - see {@link EventSource#removeListener(EventListener)}.
-   * @return {@code null} if the given {@link EventListener} was not registered and nothing changed, otherwise this
-   *         adapter itself or a new instance capable to handle less listeners.
-   */
+  /// @param listener - see [EventSource#removeListener(EventListener)].
+  /// @return `null` if the given [EventListener] was not registered and nothing changed, otherwise this
+  ///         adapter itself or a new instance capable to handle less listeners.
   public abstract EventSourceAdapter<E, L> removeListener(EventListener<? super E> listener);
 
-  /**
-   * @param event the event to {@link EventListener#onEvent(Object) send} to all {@link #addListener(EventListener)
-   *        registered} {@link EventListener}s.
-   * @return {@code true} if the event has actually been dispatched, {@code false} otherwise (no listener was
-   *         {@link #addListener(EventListener) registered} for the event).
-   */
+  /// @param event the event to [send][EventListener#onEvent(Object)] to all [registered][#addListener(EventListener)] [EventListener]s.
+  /// @return `true` if the event has actually been dispatched, `false` otherwise (no listener was
+  ///         [registered][#addListener(EventListener)] for the event).
   public abstract boolean fireEvent(E event);
 
   boolean fireEvent(E event, EventListener<? super E> listener) {
@@ -59,54 +50,42 @@ public abstract class EventSourceAdapter<E, L extends EventListener<?>> {
     return false;
   }
 
-  /**
-   * @return {@code true} if at least one {@link EventListener} is {@link #addListener(EventListener) registered},
-   *         {@code false} otherwise.
-   */
+  /// @return `true` if at least one [EventListener] is [registered][#addListener(EventListener)],
+  ///         `false` otherwise.
   public boolean hasListeners() {
 
     return (getListenerCount() > 0);
   }
 
-  /**
-   * @return the number of {@link #addListener(EventListener) registered} {@link EventListener}s.
-   */
+  /// @return the number of [registered][#addListener(EventListener)] [EventListener]s.
   public abstract int getListenerCount();
 
-  /**
-   * @param index the index of the requested {@link EventListener} in the range from {@code 0} to
-   *        <code>{@link #getListenerCount()} - 1</code>.
-   * @return the requested {@link EventListener} or {@code null} if index is out of bounds.
-   */
+  /// @param index the index of the requested [EventListener] in the range from `0` to
+  ///        `[#getListenerCount()] - 1`.
+  /// @return the requested [EventListener] or `null` if index is out of bounds.
   public abstract L getListener(int index);
 
-  /**
-   * @param index the index of the requested {@link EventListener} in the range from {@code 0} to
-   *        <code>{@link #getListenerCount()} - 1</code>.
-   * @return the requested {@link EventListener} or {@code null} if index is out of bounds.
-   */
+  /// @param index the index of the requested [EventListener] in the range from `0` to
+  ///        `[#getListenerCount()] - 1`.
+  /// @return the requested [EventListener] or `null` if index is out of bounds.
   public abstract EventListener<? super E> getRawListener(int index);
 
-  /**
-   * @param <E> the type of the events to send.
-   * @param <L> the type of the {@link EventListener listeners}.
-   * @return the empty {@link EventSourceAdapter}. Is used as a singleton instance for best efficiency allocating
-   *         absolutely no resources until a listener gets {@link #addListener(EventListener) added}.
-   */
+  /// @param <E> the type of the events to send.
+  /// @param <L> the type of the [listeners][EventListener].
+  /// @return the empty [EventSourceAdapter]. Is used as a singleton instance for best efficiency allocating
+  ///         absolutely no resources until a listener gets [added][#addListener(EventListener)].
   @SuppressWarnings("unchecked")
   public static <E, L extends EventListener<?>> EventSourceAdapter<E, L> empty() {
 
     return EMPTY;
   }
 
-  /**
-   * Like {@link #empty()} but for read-only objects.
-   *
-   * @param <E> the type of the events to send.
-   * @param <L> the type of the {@link EventListener listeners}.
-   * @return the read-only {@link EventSourceAdapter}. It will always be empty and never allow any mutation so
-   *         {@link #addListener(EventListener)} will always throw {@link ReadOnlyException}.
-   */
+  /// Like [#empty()] but for read-only objects.
+  ///
+  /// @param <E> the type of the events to send.
+  /// @param <L> the type of the [listeners][EventListener].
+  /// @return the read-only [EventSourceAdapter]. It will always be empty and never allow any mutation so
+  ///         [#addListener(EventListener)] will always throw [ReadOnlyException].
   @SuppressWarnings("unchecked")
   public static <E, L extends EventListener<?>> EventSourceAdapter<E, L> readOnly() {
 

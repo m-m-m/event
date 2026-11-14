@@ -2,18 +2,14 @@
  * http://www.apache.org/licenses/LICENSE-2.0 */
 package io.github.mmm.event;
 
-/**
- * Implementation of {@link EventSource}.
- *
- * @param <E> the type of the events to {@link EventListener#onEvent(Object) send}.
- * @param <L> the type of the {@link EventListener listeners}.
- * @since 1.0.0
- */
+/// Implementation of [EventSource].
+///
+/// @param <E> the type of the events to [send][EventListener#onEvent(Object)].
+/// @param <L> the type of the [listeners][EventListener].
+/// @since 1.0.0
 public abstract class AbstractEventSource<E, L extends EventListener<?/* super E */> > implements EventSource<E, L> {
 
-  /**
-   * The constructor.
-   */
+  /// The constructor.
   public AbstractEventSource() {
 
     super();
@@ -30,17 +26,12 @@ public abstract class AbstractEventSource<E, L extends EventListener<?/* super E
     doAddListener(l);
   }
 
-  /**
-   * @param listener the {@link EventListener} to add.
-   */
+  /// @param listener the [EventListener] to add.
   protected abstract void doAddListener(EventListener<E> listener);
 
-  /**
-   * @param event the event to {@link EventListener#onEvent(Object) send} to all {@link #addListener(EventListener)
-   *        registered} {@link EventListener}s.
-   * @return {@code true} if the event has actually been dispatched, {@code false} otherwise (no listener was
-   *         {@link #addListener(EventListener) registered} for the event).
-   */
+  /// @param event the event to [send][EventListener#onEvent(Object)] to all [registered][#addListener(EventListener)] [EventListener]s.
+  /// @return `true` if the event has actually been dispatched, `false` otherwise (no listener was
+  ///         [registered][#addListener(EventListener)] for the event).
   protected abstract boolean fireEvent(E event);
 
 }

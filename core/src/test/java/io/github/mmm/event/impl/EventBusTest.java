@@ -12,27 +12,21 @@ import org.junit.jupiter.api.Test;
 import io.github.mmm.event.EventBus;
 import io.github.mmm.event.EventListener;
 
-/**
- * This is the test-case for {@link EventBus} and its implementation.
- */
+/// This is the test-case for [EventBus] and its implementation.
 public abstract class EventBusTest extends Assertions {
 
   // private static final Logger LOG = LoggerFactory.getLogger(EventBusTest.class);
 
-  /** The number of threads. */
+  /// The number of threads.
   private static final int NUMBER_OF_THREADS = 10;
 
-  /** The number of events an {@link EventThread} sends to the next thread. */
+  /// The number of events an [EventThread] sends to the next thread.
   private static final int EVENTS_PER_THREAD = 5;
 
-  /**
-   * @return the {@link EventBus} instance to test.
-   */
+  /// @return the [EventBus] instance to test.
   protected abstract EventBus getEventBus();
 
-  /**
-   * Tests the {@link #getEventBus() event bus} with a simple scenario.
-   */
+  /// Tests the [event bus][#getEventBus()] with a simple scenario.
   @Test
   void testSimple() {
 
@@ -75,11 +69,9 @@ public abstract class EventBusTest extends Assertions {
     assertThat(removed).isFalse();
   }
 
-  /**
-   * Tests the event bus in a real concurrent usage scenario.
-   *
-   * @throws Exception if anything goes wrong.
-   */
+  /// Tests the event bus in a real concurrent usage scenario.
+  ///
+  /// @throws Exception if anything goes wrong.
   @Test
   @Disabled("Only for local testing.")
   void testConcurrent() throws Exception {
@@ -129,34 +121,26 @@ public abstract class EventBusTest extends Assertions {
     }
   }
 
-  /**
-   * A {@link Thread} sending and receiving events for asynchronous tests.
-   */
+  /// A [Thread] sending and receiving events for asynchronous tests.
   protected static class EventThread extends Thread implements EventListener<MyEvent> {
 
-    /** The {@link EventBus} to test. */
+    /// The [EventBus] to test.
     private final EventBus eventBus;
 
-    /** The sequential ID of this {@link EventThread}. */
+    /// The sequential ID of this [EventThread].
     private final int threadId;
 
-    /**
-     * A counter for the number of events that have been processed (causing an event to the following
-     * {@link EventThread}).
-     */
+    /// A counter for the number of events that have been processed (causing an event to the following
+    /// [EventThread]).
     private int eventProcessCount;
 
-    /**
-     * The total number of events received.
-     */
+    /// The total number of events received.
     private int eventTotalCount;
 
-    /**
-     * The constructor.
-     *
-     * @param eventBus is the {@link EventBus} instance.
-     * @param id is the id (sequential number) of this thread.
-     */
+    /// The constructor.
+    ///
+    /// @param eventBus is the [EventBus] instance.
+    /// @param id is the id (sequential number) of this thread.
     public EventThread(EventBus eventBus, int id) {
 
       super("EventThread" + id);
@@ -194,62 +178,50 @@ public abstract class EventBusTest extends Assertions {
     }
   }
 
-  /**
-   * A simple event for testing.
-   */
+  /// A simple event for testing.
   protected static class MyEvent {
 
-    /** Counter for unique {@link #eventId}. */
+    /// Counter for unique [#eventId].
     private static int idCounter = 0;
 
-    /** The ID of this event (used for copies of the event for following {@link EventThread}s). */
+    /// The ID of this event (used for copies of the event for following [EventThread]s).
     private int eventId;
 
-    /**
-     * The {@link EventThread#getId() id} of the thread who initially triggered the event (mainly for debugging and
-     * tracing).
-     */
+    /// The [id][EventThread#getId()] of the thread who initially triggered the event (mainly for debugging and
+    /// tracing).
     private int sourceThreadId;
 
-    /** The {@link EventThread#getId() id} of the thread who should handle the event. */
+    /// The [id][EventThread#getId()] of the thread who should handle the event.
     private int targetThreadId;
 
-    /**
-     * The constructor.
-     *
-     * @param sourceThreadId - see {@link #getSourceThreadId()}.
-     */
+    /// The constructor.
+    ///
+    /// @param sourceThreadId - see [#getSourceThreadId()].
     public MyEvent(int sourceThreadId) {
 
       this(sourceThreadId, sourceThreadId + 1);
     }
 
-    /**
-     * The constructor.
-     *
-     * @param sourceThreadId - see {@link #getSourceThreadId()}.
-     * @param targetThreadId - see {@link #getTargetThreadId()}.
-     */
+    /// The constructor.
+    ///
+    /// @param sourceThreadId - see [#getSourceThreadId()].
+    /// @param targetThreadId - see [#getTargetThreadId()].
     public MyEvent(int sourceThreadId, int targetThreadId) {
 
       this(sourceThreadId, targetThreadId, getNextId());
     }
 
-    /**
-     * @return the next unique ID.
-     */
+    /// @return the next unique ID.
     private static synchronized int getNextId() {
 
       return idCounter++;
     }
 
-    /**
-     * The constructor.
-     *
-     * @param eventId - see {@link #getEventId()}
-     * @param sourceThreadId - see {@link #getSourceThreadId()}.
-     * @param targetThreadId - see {@link #getTargetThreadId()}.
-     */
+    /// The constructor.
+    ///
+    /// @param eventId - see [#getEventId()]
+    /// @param sourceThreadId - see [#getSourceThreadId()].
+    /// @param targetThreadId - see [#getTargetThreadId()].
     public MyEvent(int sourceThreadId, int targetThreadId, int eventId) {
 
       super();
@@ -258,25 +230,19 @@ public abstract class EventBusTest extends Assertions {
       this.targetThreadId = targetThreadId;
     }
 
-    /**
-     * @return the eventId
-     */
+    /// @return the eventId
     public int getEventId() {
 
       return this.eventId;
     }
 
-    /**
-     * @return the sourceThreadId
-     */
+    /// @return the sourceThreadId
     public int getSourceThreadId() {
 
       return this.sourceThreadId;
     }
 
-    /**
-     * @return the threadId
-     */
+    /// @return the threadId
     public int getTargetThreadId() {
 
       return this.targetThreadId;

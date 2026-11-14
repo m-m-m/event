@@ -4,9 +4,7 @@ import java.util.ServiceLoader;
 
 import io.github.mmm.base.service.ServiceHelper;
 
-/**
- * Class giving {@link #get() global access} to the {@link EventBus}.
- */
+/// Class giving [global access][#get()] to the [EventBus].
 public final class EventBusAccess {
 
   private static final EventBus EVENT_BUS = ServiceHelper.singleton(ServiceLoader.load(EventBus.class), false);
@@ -15,9 +13,7 @@ public final class EventBusAccess {
 
   }
 
-  /**
-   * @return the {@link EventBus} instance.
-   */
+  /// @return the [EventBus] instance.
   public static EventBus get() {
 
     return EVENT_BUS;

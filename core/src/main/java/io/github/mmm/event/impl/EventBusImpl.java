@@ -6,26 +6,20 @@ import io.github.mmm.base.exception.GlobalExceptionHandler;
 import io.github.mmm.event.AbstractEventBus;
 import io.github.mmm.event.EventBus;
 
-/**
- * This is the default implementation of {@link EventBus}.
- */
+/// This is the default implementation of [EventBus].
 public class EventBusImpl extends AbstractEventBus {
 
   private volatile boolean dispatching;
 
-  /**
-   * The constructor.
-   */
+  /// The constructor.
   public EventBusImpl() {
 
     this(null);
   }
 
-  /**
-   * The constructor.
-   *
-   * @param errorHandler the {@link GlobalExceptionHandler} instance.
-   */
+  /// The constructor.
+  ///
+  /// @param errorHandler the [GlobalExceptionHandler] instance.
   protected EventBusImpl(GlobalExceptionHandler errorHandler) {
 
     super(errorHandler);

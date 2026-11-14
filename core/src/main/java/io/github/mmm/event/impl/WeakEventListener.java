@@ -9,27 +9,23 @@ import io.github.mmm.event.EventListener;
 import io.github.mmm.event.EventSource;
 import io.github.mmm.event.EventSourceAdapter;
 
-/**
- * {@link EventListener} that wraps an original {@link EventListener} using a {@link WeakReference} so that the original
- * can be gargabe collected without being {@link io.github.mmm.event.EventSource#removeListener(EventListener) removed}.
- *
- * @param <E> the type of the {@link EventListener#onEvent(Object) handled} events.
- * @since 1.0.0
- */
+/// [EventListener] that wraps an original [EventListener] using a [WeakReference] so that the original
+/// can be gargabe collected without being [removed][io.github.mmm.event.EventSource#removeListener(EventListener)].
+///
+/// @param <E> the type of the [handled][EventListener#onEvent(Object)] events.
+/// @since 1.0.0
 public class WeakEventListener<E> implements EventListener<E> {
 
   @SuppressWarnings("rawtypes")
   private final EventSource source;
 
-  /** The {@link WeakReference}. */
+  /// The [WeakReference].
   public final WeakReference<EventListener<E>> ref;
 
-  /**
-   * The constructor.
-   *
-   * @param source the {@link EventSourceAdapter}.
-   * @param listener the original listener to wrap.
-   */
+  /// The constructor.
+  ///
+  /// @param source the [EventSourceAdapter].
+  /// @param listener the original listener to wrap.
   public WeakEventListener(EventSource<E, ?> source, EventListener<E> listener) {
 
     super();
@@ -39,9 +35,7 @@ public class WeakEventListener<E> implements EventListener<E> {
     this.ref = new WeakReference<>(listener);
   }
 
-  /**
-   * @return {@code true} if the wrapped {@link EventListener} has been garbage collected, {@code false} otherwise.
-   */
+  /// @return `true` if the wrapped [EventListener] has been garbage collected, `false` otherwise.
   public boolean wasGarbageCollected() {
 
     return (this.ref.get() == null);
@@ -71,12 +65,10 @@ public class WeakEventListener<E> implements EventListener<E> {
     return this.ref.get();
   }
 
-  /**
-   * @param count the current size of listeners. Has to be less or equal to the length of the given {@code listeners}
-   *        array.
-   * @param listeners the array of event listeners. May be modified by this method.
-   * @return the new size of listeners.
-   */
+  /// @param count the current size of listeners. Has to be less or equal to the length of the given `listeners`
+  ///        array.
+  /// @param listeners the array of event listeners. May be modified by this method.
+  /// @return the new size of listeners.
   public static int trim(int count, EventListener<?>[] listeners) {
 
     for (int i = 0; i < count; i++) {

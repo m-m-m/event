@@ -11,9 +11,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import io.github.mmm.base.exception.GlobalExceptionHandler;
 
-/**
- * This is the default implementation of {@link EventBus}.
- */
+/// This is the default implementation of [EventBus].
 public abstract class AbstractEventBus implements EventBus {
 
   // private static final Logger LOG = LoggerFactory.getLogger(AbstractEventBus.class);
@@ -23,22 +21,18 @@ public abstract class AbstractEventBus implements EventBus {
 
   private final Queue<Object> eventQueue;
 
-  /** The {@link GlobalExceptionHandler}. */
+  /// The [GlobalExceptionHandler].
   protected final GlobalExceptionHandler errorHandler;
 
-  /**
-   * The constructor.
-   */
+  /// The constructor.
   public AbstractEventBus() {
 
     this(null);
   }
 
-  /**
-   * The constructor.
-   *
-   * @param errorHandler the {@link GlobalExceptionHandler} instance.
-   */
+  /// The constructor.
+  ///
+  /// @param errorHandler the [GlobalExceptionHandler] instance.
   protected AbstractEventBus(GlobalExceptionHandler errorHandler) {
 
     super();
@@ -59,15 +53,11 @@ public abstract class AbstractEventBus implements EventBus {
     triggerDispatchEvents();
   }
 
-  /**
-   * Called from {@link #sendEvent(Object)} to ensure {@link #dispatchEvents()} is triggered. This can be done
-   * synchronous or asynchronous.
-   */
+  /// Called from [#sendEvent(Object)] to ensure [#dispatchEvents()] is triggered. This can be done
+  /// synchronous or asynchronous.
   protected abstract void triggerDispatchEvents();
 
-  /**
-   * Dispatches all events in the event queue.
-   */
+  /// Dispatches all events in the event queue.
   protected void dispatchEvents() {
 
     while (true) {
@@ -79,12 +69,10 @@ public abstract class AbstractEventBus implements EventBus {
     }
   }
 
-  /**
-   * Dispatches the given event.
-   *
-   * @param <E> is the generic type of {@code event}.
-   * @param event is the event to dispatch.
-   */
+  /// Dispatches the given event.
+  ///
+  /// @param <E> is the generic type of `event`.
+  /// @param event is the event to dispatch.
   protected <E> void dispatchEvent(E event) {
 
     @SuppressWarnings("unchecked")
@@ -99,24 +87,20 @@ public abstract class AbstractEventBus implements EventBus {
     }
   }
 
-  /**
-   * Called if an event was {@link #sendEvent(Object) send} but not dispatched to any
-   * {@link #addListener(Class, EventListener) registered listener}.
-   *
-   * @param event is the un-dispatched event.
-   */
+  /// Called if an event was [send][#sendEvent(Object)] but not dispatched to any
+  /// [registered listener][#addListener(Class, EventListener)].
+  ///
+  /// @param event is the un-dispatched event.
   protected void handleUndispatchedEvent(Object event) {
 
     // LOG.warn("Event send with no responsible listener registered: {}", event);
   }
 
-  /**
-   * Gets or creates the {@link EventDispatcher} for the given {@code eventType}.
-   *
-   * @param <E> is the generic type of {@code eventType}.
-   * @param eventType is the {@link Class} reflecting the event.
-   * @return the {@link EventDispatcher} responsible for the given {@code eventType}.
-   */
+  /// Gets or creates the [EventDispatcher] for the given `eventType`.
+  ///
+  /// @param <E> is the generic type of `eventType`.
+  /// @param eventType is the [Class] reflecting the event.
+  /// @return the [EventDispatcher] responsible for the given `eventType`.
   @SuppressWarnings("unchecked")
   protected <E> EventDispatcher<E> getEventDispatcherRequired(Class<E> eventType) {
 
@@ -134,15 +118,13 @@ public abstract class AbstractEventBus implements EventBus {
     return (EventDispatcher<E>) dispatcher;
   }
 
-  /**
-   * Gets the most specific {@link EventDispatcher} responsible the given {@code eventType}.
-   *
-   * @param <E> is the generic type of {@code eventType}.
-   * @param eventType is the {@link Class} reflecting the event.
-   * @return the most specific {@link EventDispatcher} responsible for the given {@code eventType}. May be {@code null}
-   *         if no {@link EventListener} is {@link #addListener(Class, EventListener) registered} for a compatible
-   *         {@code eventType}.
-   */
+  /// Gets the most specific [EventDispatcher] responsible the given `eventType`.
+  ///
+  /// @param <E> is the generic type of `eventType`.
+  /// @param eventType is the [Class] reflecting the event.
+  /// @return the most specific [EventDispatcher] responsible for the given `eventType`. May be `null`
+  ///         if no [EventListener] is [registered][#addListener(Class, EventListener)] for a compatible
+  ///         `eventType`.
   @SuppressWarnings("unchecked")
   protected <E> EventDispatcher<E> getEventDispatcherOrNull(Class<E> eventType) {
 
@@ -189,38 +171,32 @@ public abstract class AbstractEventBus implements EventBus {
     return removed;
   }
 
-  /**
-   * A dispatcher for all {@link EventListener}s of a particular {@link EventBus#addListener(Class, EventListener) event
-   * type}.
-   *
-   * @param <E> type of the {@link EventListener#onEvent(Object) events}.
-   */
+  /// A dispatcher for all [EventListener]s of a particular [event
+ type][EventBus#addListener(Class, EventListener)].
+  ///
+  /// @param <E> type of the [events][EventListener#onEvent(Object)].
   protected class EventDispatcher<E> extends AbstractEventSource<E, EventListener<E>> {
 
-    /** @see #onEvent(Object, Collection) */
+    /// @see #onEvent(Object, Collection)
     private final EventDispatcher<? super E> parentDispatcher;
 
-    /** @see #fireEvent(Object, Collection) */
+    /// @see #fireEvent(Object, Collection)
     private final Collection<EventListener<E>> listeners;
 
-    /**
-     * The constructor.
-     *
-     * @param parent is the {@link EventDispatcher} responsible for the super-class or {@code null} if this is the root
-     *        {@link EventDispatcher} responsible for {@link Object}.
-     */
+    /// The constructor.
+    ///
+    /// @param parent is the [EventDispatcher] responsible for the super-class or `null` if this is the root
+    ///        [EventDispatcher] responsible for [Object].
     public EventDispatcher(EventDispatcher<? super E> parent) {
 
       this(parent, new ConcurrentLinkedQueue<>());
     }
 
-    /**
-     * The constructor.
-     *
-     * @param parent is the {@link EventDispatcher} responsible for the super-class or {@code null} if this is the root
-     *        {@link EventDispatcher} responsible for {@link Object}.
-     * @param listeners the empty {@link Collection} implementation for the {@link EventListener}s.
-     */
+    /// The constructor.
+    ///
+    /// @param parent is the [EventDispatcher] responsible for the super-class or `null` if this is the root
+    ///        [EventDispatcher] responsible for [Object].
+    /// @param listeners the empty [Collection] implementation for the [EventListener]s.
     protected EventDispatcher(EventDispatcher<? super E> parent, Collection<EventListener<E>> listeners) {
 
       super();
