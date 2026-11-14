@@ -53,8 +53,8 @@ public abstract class AbstractEventBus implements EventBus {
     triggerDispatchEvents();
   }
 
-  /// Called from [#sendEvent(Object)] to ensure [#dispatchEvents()] is triggered. This can be done
-  /// synchronous or asynchronous.
+  /// Called from [#sendEvent(Object)] to ensure [#dispatchEvents()] is triggered. This can be done synchronous
+  /// or asynchronous.
   protected abstract void triggerDispatchEvents();
 
   /// Dispatches all events in the event queue.
@@ -122,9 +122,8 @@ public abstract class AbstractEventBus implements EventBus {
   ///
   /// @param <E> is the generic type of `eventType`.
   /// @param eventType is the [Class] reflecting the event.
-  /// @return the most specific [EventDispatcher] responsible for the given `eventType`. May be `null`
-  ///         if no [EventListener] is [registered][#addListener(Class, EventListener)] for a compatible
-  ///         `eventType`.
+  /// @return the most specific [EventDispatcher] responsible for the given `eventType`. May be `null` if no
+  ///         [EventListener] is [registered][#addListener(Class, EventListener)] for a compatible `eventType`.
   @SuppressWarnings("unchecked")
   protected <E> EventDispatcher<E> getEventDispatcherOrNull(Class<E> eventType) {
 
@@ -171,8 +170,7 @@ public abstract class AbstractEventBus implements EventBus {
     return removed;
   }
 
-  /// A dispatcher for all [EventListener]s of a particular [event
- type][EventBus#addListener(Class, EventListener)].
+  /// A dispatcher for all [EventListener]s of a particular [event type][EventBus#addListener(Class, EventListener)].
   ///
   /// @param <E> type of the [events][EventListener#onEvent(Object)].
   protected class EventDispatcher<E> extends AbstractEventSource<E, EventListener<E>> {
